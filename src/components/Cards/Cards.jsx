@@ -9,6 +9,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate }}) => {
   if(!confirmed) {
     return 'Loading.....';
   }
+  const activeCases = confirmed.value - recovered.value - deaths.value;
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify="center">
@@ -40,6 +41,16 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate }}) => {
             </Typography>
             <Typography color="textSecondary">{new Date(lastUpdate).toDateString()}</Typography>
             <Typography variant="body2">Number of deaths caused by COVID-19</Typography>
+          </CardContent>
+        </Grid>
+        <Grid item component={Card} xs={12} md={3} className={cx(styles.card, styles.active)}>
+          <CardContent>
+            <Typography color="textSecondary" gutterBottom>Active</Typography>
+            <Typography variant="h5">
+              <CountUp start={0} end={activeCases} duration={2.5} separator="," />
+            </Typography>
+            <Typography color="textSecondary">{new Date(lastUpdate).toDateString()}</Typography>
+            <Typography variant="body2">Number of active cases of COVID-19</Typography>
           </CardContent>
         </Grid>
       </Grid>
